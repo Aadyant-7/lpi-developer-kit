@@ -107,7 +107,7 @@
                 <th data-tip="Automated evaluation score">Score</th>
                 <th data-tip="Track they chose">Track</th>
                 <th>Skills</th>
-                <th>GitHub</th>
+                <th>Contributions</th>
             </tr></thead>
             <tbody id="tbody"><tr><td colspan="7" class="empty">Loading live data...</td></tr></tbody>
         </table>
@@ -125,10 +125,37 @@ let curSearch = '';
 const stageNames = {1:'Registered', 2:'Running', 3:'Shipping'};
 const stageClasses = {1:'lv1', 2:'lv2', 3:'lv3'};
 
+// 🥚 If you're reading this source code, you found your first easter egg.
+// Add "found_easter_egg": true to your contributor JSON for bonus points.
+// There are more hidden in the LPI server source code. Happy hunting.
+
 fetch('data.json')
     .then(r => r.json())
     .then(data => {
-        allData = (data.contributors || []).sort((a,b) => b.level - a.level || a.name.localeCompare(b.name));
+        allData = (data.contributors || []).sort((a,b) => b.level - a.level || -(a.score||0) + (b.score||0) || a.name.localeCompare(b.name));
+
+        // Assign badges
+        const sorted = [...allData].sort((a,b) => {
+            const aTime = a._merged || '9999'; const bTime = b._merged || '9999';
+            return aTime.localeCompare(bTime);
+        });
+        const earlyBirds = new Set(sorted.slice(0, 10).map(d => d.name));
+
+        allData.forEach(d => {
+            d._badges = [];
+            // Early bird: first 10 to register
+            if (earlyBirds.has(d.name)) d._badges.push({icon:'🐦', tip:'Early Bird — among the first 10 to register'});
+            // Gold star: completed Level 3
+            if (d.level >= 3) d._badges.push({icon:'⭐', tip:'Gold Star — shipped a working deliverable'});
+            // High scorer
+            if ((d.score_pct || 0) >= 80) d._badges.push({icon:'🏆', tip:'Top Scorer — 80%+ evaluation score'});
+            // Easter egg finder
+            if (d.found_easter_egg) d._badges.push({icon:'🥚', tip:'Found the easter egg in the source code'});
+            // Multi-track (future — when someone submits to multiple tracks)
+            // Security champion
+            if ((d.track||'').includes('E') && d.level >= 2) d._badges.push({icon:'🛡️', tip:'Security Champion — QA & Security track'});
+        });
+
         document.getElementById('badge').textContent = 'LIVE — ' + allData.length + ' contributors';
         document.getElementById('badge').className = 'live-badge';
         render();
@@ -209,19 +236,22 @@ function render() {
         const lvTxt = stageNames[d.level] || 'Registered';
         const skills = (d.skills || []).slice(0, 4).map(s => `<span class="tag">${s}</span>`).join('');
         const track = d.track || '—';
-        const gh = d.github ? `<a href="https://github.com/${d.github}">${d.github}</a>` : '—';
+        const gh = d.github || '';
+        const contribLinks = gh ? `<a href="https://github.com/${gh}" style="font-size:0.75rem">${gh}</a> · <a href="https://github.com/Life-Atlas/lpi-developer-kit/pulls?q=is%3Apr+author%3A${gh}" style="font-size:0.75rem">PRs</a>` : '—';
 
         const scorePct = d.score_pct || 0;
         const scoreDisplay = d.score != null ? `<span style="display:inline-block;height:5px;width:50px;background:#2d3748;border-radius:3px;vertical-align:middle;margin-right:0.4rem"><span style="display:block;height:100%;width:${scorePct}%;background:linear-gradient(90deg,#63b3ed,#b794f4);border-radius:3px"></span></span><span style="font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:#a0aec0">${d.score}/${d.score_max}</span>` : '<span style="color:#2d3748;font-size:0.75rem">—</span>';
 
+        const badges = (d._badges || []).map(b => `<span data-tip="${b.tip}" style="cursor:help;margin-left:0.2rem">${b.icon}</span>`).join('');
+
         return `<tr>
             <td class="${rc}">${i + 1}</td>
-            <td><strong>${d.name}</strong></td>
+            <td><strong>${d.name}</strong>${badges}</td>
             <td><span class="lv ${lvCls}">${lvTxt}</span></td>
             <td>${scoreDisplay}</td>
             <td style="font-size:0.78rem;color:#a0aec0">${track}</td>
             <td>${skills}</td>
-            <td style="font-size:0.78rem">${gh}</td>
+            <td style="font-size:0.78rem">${contribLinks}</td>
         </tr>`;
     }).join('');
 }
