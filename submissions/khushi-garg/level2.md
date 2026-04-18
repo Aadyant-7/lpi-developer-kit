@@ -1,7 +1,5 @@
 # Level 2 Submission — Khushi Garg
 
----
-
 ## A. Test Client Output
 
 === LPI Sandbox Test Client ===
@@ -32,8 +30,6 @@ Failed: 0/8
 
 All tools are working successfully and the LPI Sandbox setup is complete.
 
----
-
 ## B. LLM Output
 
 I used a local LLM model through Ollama to understand the SMILE methodology and digital twin concepts.
@@ -42,8 +38,6 @@ The model explained that SMILE (Sustainable Methodology for Impact Lifecycle Ena
 
 It also highlighted that each phase of SMILE—from reality emulation to implementation—helps ensure that the solution is practical, efficient, and aligned with real-world needs.
 
----
-
 ## C. Model Choice
 
 I used a lightweight local model (via Ollama) because:
@@ -51,15 +45,11 @@ I used a lightweight local model (via Ollama) because:
 - It does not require external APIs
 - It provides fast and reliable responses
 
----
-
 ## D. Reflection (SMILE)
 
 1. I realized that before applying AI, it is important to understand the real-world system properly through digital twins.  
 2. I found it interesting that SMILE focuses on impact rather than just collecting data.  
 3. I learned that local AI models can be powerful and useful without depending on external services.
-
----
 
 ## E. What I Did
 
@@ -67,8 +57,6 @@ I used a lightweight local model (via Ollama) because:
 2. I built the project using `npm run build`.  
 3. I ran the test client using `npm run test-client` and verified that all tools passed successfully.  
 4. I set up a local LLM using Ollama and used it to explore SMILE concepts.  
-
----
 
 ## F. Problem Faced
 
