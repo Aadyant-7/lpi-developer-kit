@@ -1,11 +1,17 @@
-I created a GitHub repository for my agent.
+## HOW I DID IT - Yash Vardhan
 
-Initially, I tried connecting using requests but got connection errors.
+For Level 3, I chose Track A: Agent Builders.
 
-Then I fixed it by using subprocess and running the LPI sandbox commands.
+First, I created a separate GitHub repository named `lpi-agent-yash` for my Level 3 project.
 
-I also solved folder path issues to correctly execute npm commands.
+Then I created an `agent.py` file and started building a Python-based agent.
 
-Finally, my agent worked and returned outputs from LPI tools.
+At first, I tried to connect to the LPI tools using `requests` and localhost, but I got connection errors because the server was not running the way I expected.
 
-I learned how AI agents connect with tools and how to debug real problems.
+After debugging the issue, I changed the approach and used Python `subprocess` to run the LPI sandbox commands from the `lpi-developer-kit` folder.
+
+I also fixed the folder path problem so the script could correctly run `npm run test-client` from the right location.
+
+After that, the agent successfully returned LPI sandbox output and showed the sources used: `query_knowledge` and `get_case_studies`.
+
+Through this process, I learned how tool-based AI agents work, how to debug connection and path problems, and how to integrate Python with command-line tools in a practical project.
