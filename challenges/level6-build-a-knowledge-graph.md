@@ -1,11 +1,22 @@
 # Level 6 — Build It: Factory Graph + Dashboard
 
 **Type:** Python build → deployed Streamlit app  
-**Deadline:** Wednesday May 13, 2026 23:59 UTC  
+**Deadline:** Tuesday May 13, 2026 23:59 UTC  
 **Submission:** PR to `lpi-developer-kit` → `submissions/<your-github-username>/level6/`  
 **PR title:** `level-6: Your Name`  
-**Time:** 6-10 hours over the week  
+**Time:** 6-10 hours over the weekend  
 **Scoring:** We visit your deployed URL and click "Self-Test"
+
+---
+
+## Why This Matters
+
+After this challenge, you start real stream work (May 16). The skills here are non-negotiable:
+- **Neo4j** → every stream uses knowledge graphs (matching, factory data, datacenter relationships)
+- **Streamlit** → VSAB team builds the client dashboard in Streamlit
+- **Deployment** → if you can't ship to a URL, you can't contribute to a team
+
+This is your audition. Ship it.
 
 ---
 
@@ -39,7 +50,7 @@ pip install streamlit neo4j python-dotenv pandas plotly
 ### Data
 Copy the 3 CSV files from `challenges/data/` into your project:
 - `factory_production.csv` — 68 rows: 8 projects × stations × weeks (planned vs actual hours)
-- `factory_workers.csv` — 14 workers with stations, certifications, coverage
+- `factory_workers.csv` — 13 workers with stations, certifications, coverage
 - `factory_capacity.csv` — 8 weeks of workforce capacity vs demand
 
 ---
@@ -67,7 +78,7 @@ Must:
 | Project | production.csv → project_id/name | 8 |
 | Product | production.csv → product_type | 7 (IQB, IQP, SB, SD, SP, SR, HSQ) |
 | Station | production.csv → station_code/name | 9 |
-| Worker | workers.csv | 14 |
+| Worker | workers.csv | 13 |
 | Week | production/capacity.csv | 8 |
 | Etapp | production.csv → etapp | 2+ |
 
@@ -235,19 +246,33 @@ submissions/<your-github-username>/level6/
 
 ---
 
-## Timeline Pressure
+## Timeline (starts Friday May 9)
 
 | Day | What you should have |
 |-----|---------------------|
-| Tue May 6 | Neo4j instance created, `seed_graph.py` populating |
-| Wed May 7 | Graph verified in Neo4j Browser, first Streamlit page live |
-| Thu May 8 | Deploy to Streamlit Cloud (even if ugly) |
-| Fri May 9 | 4 pages working, self-test passing |
-| Sat-Sun May 10-11 | Polish charts, fix layout |
-| Mon May 12 | Final push, test deployed URL |
-| **Wed May 13** | **Deadline. No extensions.** |
+| **Fri May 9** | Neo4j Aura instance created, `seed_graph.py` started, first nodes loading |
+| **Sat May 10** | Graph populated, verified in Neo4j Browser, first Streamlit page rendering |
+| **Sun May 11** | Deploy to Streamlit Cloud (even if ugly — deploy EARLY) |
+| **Mon May 12** | 4 pages working, self-test passing, polish charts |
+| **Tue May 13** | Final push, verify deployed URL works, submit PR |
+| **Tue May 13 23:59 UTC** | **DEADLINE. No extensions.** |
 
-**Deploy by Thursday, not Monday.** If you wait until the last days to deploy, you'll spend all your time debugging deployment instead of building features.
+**Deploy on day 3, not day 5.** If you wait until Tuesday to deploy, you'll spend all of Tuesday debugging deployment instead of building features.
+
+---
+
+## Stream Bonus (Optional, +15 pts)
+
+After completing the base challenge, pick ONE bonus aligned to your stream:
+
+### Bonus A: People Graph (Boardy stream)
+Model 5 intern profiles as a knowledge graph (we'll provide sample data). Create Person nodes with HAS_SKILL, HAS_INTEREST, and ASSIGNED_TO relationships. Write one Cypher query: "Find two people with complementary skills who aren't on the same team." (+15 pts)
+
+### Bonus B: Spatial Layout (3D stream)
+Add a 5th dashboard page showing a factory floor plan (simple rectangles for 9 stations, positioned in a grid). Color-code by load (green/yellow/red). Click a station → show its projects. Any viz approach accepted. (+15 pts)
+
+### Bonus C: Forecast (VSAB/DataPro+ stream)
+Add a page that answers: "Given current trajectory, which station will be overloaded in week 9?" Extrapolate from the 8 weeks using simple linear trend. Show forecast on a chart with confidence band. (+15 pts)
 
 ---
 
@@ -265,7 +290,7 @@ submissions/<your-github-username>/level6/
 ## FAQ
 
 **Q: Can I add more pages than 4?**  
-A: Yes. Extra pages don't earn extra points but show initiative.
+A: Yes. Extra pages don't earn extra points (unless it's a Stream Bonus) but show initiative.
 
 **Q: Can I use matplotlib instead of Plotly?**  
 A: Plotly preferred (interactive). Matplotlib accepted but costs 2 pts on Station Load.
@@ -278,3 +303,6 @@ A: No. Everyone uses the same data. Your schema and visualization choices are wh
 
 **Q: Can I work with someone?**  
 A: Discuss approaches, yes. Identical code = both get 0.
+
+**Q: Do I need to do L5 before L6?**  
+A: Strongly recommended. L5 Q5 is literally your L6 blueprint. Same deadline so you submit both together.
